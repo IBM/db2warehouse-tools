@@ -1,0 +1,4 @@
+head_node=test01:10.112.36.101
+data_node1=test02:10.112.36.102
+data_node2=test03:10.112.36.103
+data_node3=test04:10.112.36.104
