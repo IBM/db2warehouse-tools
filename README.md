@@ -1,11 +1,13 @@
 # db2warehouse-tools
 This code shows how IBM® Db2 Warehouse MPP cluster can be deployed and administrated by using  IBM®  Db2 Warehouse Orchestrator tool.
 
-Clone this repository on each node of your MPP cluster.
+Download this code on each node of your MPP cluster.
 
-`git clone git@github.com:IBM/db2warehouse-tools.git`
+`wget https://github.com/IBM/db2warehouse-tools/archive/master.zip -O db2warehouse-tools-master.zip`
 
-`cd db2warehouse-tools`
+`unzip db2warehouse-tools-master.zip`
+
+`cd db2warehouse-tools-master`
 
 `chmod +x *.sh`
 
