@@ -260,10 +260,15 @@ stop_services() {
     local head_node="$1"
     # Get current head node from first ACTIVE node in the cluster
     if [[ -z "$head_node" ]]; then
-        ignore_failed_nodes
-        head_node="$(docker_remote --node ${nodelist[0]} --quiet --command "exec -it ${CONTAINER_NAME} wvcli system master")"
-        head_node="$(echo $head_node | tr -d '\r')"
-        HEAD_NODE=$head_node
+        docker_remote --node $HEAD_NODE --quiet --command "ps" | grep -wq "$CONTAINER_NAME"
+        if [[ $? -eq 0 ]]; then
+            ignore_failed_nodes
+            head_node="$(docker_remote --node ${nodelist[0]} --quiet --command "exec -it ${CONTAINER_NAME} wvcli system master")"
+            head_node="$(echo $head_node | tr -d '\r')"
+            HEAD_NODE=$head_node
+        fi
+    else
+        head_node=$HEAD_NODE
     fi
     # If container is stopped, do not attempt to stop the services
     docker_remote --node $head_node --quiet --command "ps" | grep -wq "$CONTAINER_NAME" || return
