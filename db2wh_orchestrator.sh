@@ -143,7 +143,7 @@ cat << EOF
               -d | --stop           for stopping the existing ${PRODUCT_NAME} deployment
               -u | --upgrade        for upgrading the ${PRODUCT_NAME} deployment to the latest available level
               -sa| --stand-alone    for loading a stand-alone image (-sa <path_to_stand-alone_image> )
-              -si| --scalein        for scaling in ${PRODUCT_NAME} deployment (-si <ip_addr_of_node_to_remove>...n)
+              -si| --scalein        for scaling in ${PRODUCT_NAME} deployment (-si <short_hostname_of_node_to_remove>...n)
               -so| --scaleout       for scaling out ${PRODUCT_NAME} deployment(-so <short_hostname_of_node_to_add> <ip_addr_of_node_to_add>...n)
               -e | --env            for passing options to ${PRODUCT_NAME} (-e OPTION1=value1 -e OPTION2=value2... -e OPTIONN=valueN)
               -h | --help           help screen
