@@ -143,7 +143,7 @@ cat << EOF
               -d | --stop           for stopping the existing ${PRODUCT_NAME} deployment
               -u | --upgrade        for upgrading the ${PRODUCT_NAME} deployment to the latest available level
               -sa| --stand-alone    for loading a stand-alone image (-sa <path_to_stand-alone_image> )
-              -si| --scalein        for scaling in ${PRODUCT_NAME} deployment (-si <ip_addr_of_node_to_remove>...n)
+              -si| --scalein        for scaling in ${PRODUCT_NAME} deployment (-si <short_hostname_of_node_to_remove>...n)
               -so| --scaleout       for scaling out ${PRODUCT_NAME} deployment(-so <short_hostname_of_node_to_add> <ip_addr_of_node_to_add>...n)
               -e | --env            for passing options to ${PRODUCT_NAME} (-e OPTION1=value1 -e OPTION2=value2... -e OPTIONN=valueN)
               -h | --help           help screen
@@ -640,19 +640,19 @@ EOF
             total=${#scalein_nodes[*]}
             for (( i=0; i<=$(( $total -1 )); i+=1 ))
             do
-                scalein_node=`cat ${NODESFILE} | grep ${scalein_nodes[$i]} | cut -d '=' -f 2 | cut -d ':' -f 1`
+                scalein_node=`cat ${NODESFILE} | grep ${scalein_nodes[$i]} | cut -d '=' -f 2 | cut -d ':' -f 1 | tr -d '[:space:]'`
                 if [[ "$scalein_node" == "$HEAD_NODE" ]]; then
                     log_error "${scalein_nodes[$i]} is a head node. You cannot remove it from the MPP deployment."
                     exit 1
                 else
                     log_info "Removing ${scalein_node} from ${NODESFILE}"
-                    scalein_node_ip=`cat ${NODESFILE} | grep $scalein_node | cut -d '=' -f 2 | cut -d ':' -f 2`
+                    scalein_node_ip=`cat ${NODESFILE} | grep $scalein_node | cut -d '=' -f 2 | cut -d ':' -f 2 | tr -d '[:space:]'`
                     datanodes=($(echo "${datanodes[@]}" | sed "s/${scalein_node}//"))
                     datanodes_pair=($(echo "${datanodes_pair[@]}" | sed "s/${scalein_node}*.\[${scalein_node_ip}]//"))
                     sed -i "/${scalein_node}/d" $NODESFILE
                 fi
             done
-            HEAD_NODE_IP=`cat ${NODESFILE} | grep $HEAD_NODE | cut -d '=' -f 2 | cut -d ':' -f 2`
+            HEAD_NODE_IP=`cat ${NODESFILE} | grep $HEAD_NODE | cut -d '=' -f 2 | cut -d ':' -f 2 | tr -d '[:space:]'`
             reconstruct_env_file "$HEAD_NODE[$HEAD_NODE_IP]" "${datanodes_pair[@]}" 
         fi
         validate_env_file
@@ -724,7 +724,7 @@ EOF
                   fi
              done
              sed -i '/^$/d' $NODESFILE
-             HEAD_NODE_IP=`cat ${NODESFILE} | grep $HEAD_NODE | cut -d '=' -f 2 | cut -d ':' -f 2`
+             HEAD_NODE_IP=`cat ${NODESFILE} | grep $HEAD_NODE | cut -d '=' -f 2 | cut -d ':' -f 2 | tr -d '[:space:]'`
              reconstruct_env_file "$HEAD_NODE[$HEAD_NODE_IP]" "${datanodes_pair[@]}"
         fi
         
