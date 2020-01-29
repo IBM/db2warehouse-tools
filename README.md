@@ -34,6 +34,6 @@ To stop the existing deployment:
 
 `./db2wh_orchestrator.sh --file /mnt/clusterfs/nodes --stop`
 
-To start the the deployment:
+To start the deployment:
 
 `./db2wh_orchestrator.sh --file /mnt/clusterfs/nodes --start`
